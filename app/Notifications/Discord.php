@@ -3,10 +3,10 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Nwilging\LaravelDiscordBot\Contracts\Notifications\DiscordNotificationContract;
+use Nwilging\LaravelDiscordBot\Support\Builder\ComponentBuilder;
+use Nwilging\LaravelDiscordBot\Support\Builder\EmbedBuilder;
 
 class Discord extends Notification implements DiscordNotificationContract
 {
@@ -19,10 +19,20 @@ class Discord extends Notification implements DiscordNotificationContract
 
     public function toDiscord($notifiable): array
     {
+        $channelId = '1057996444977606726';
+        $embedBuilder = new EmbedBuilder();
+        $embedBuilder->addAuthor('/@!');
+
+        $componentBuilder = new ComponentBuilder();
+        $componentBuilder->addActionButton('Kullanıcı Banlansn mı', 'customId');
+
         return [
-            'contentType' => 'plain',
-            'channelId' => '1029828776256868515',
-            'message' => 'message content',
+            'contentType' => 'rich',
+            'channelId' => $channelId,
+            'embeds' => $embedBuilder->getEmbeds(),
+            'components' => [
+                $componentBuilder->getActionRow()->getType(),
+            ],
         ];
     }
 }
