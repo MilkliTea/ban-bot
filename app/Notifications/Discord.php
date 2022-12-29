@@ -21,7 +21,7 @@ class Discord extends Notification implements DiscordNotificationContract
     {
         $channelId = '1057996444977606726';
         $embedBuilder = new EmbedBuilder();
-        $embedBuilder->addAuthor('/@!');
+        $embedBuilder->addAuthor('/alper');
 
         $componentBuilder = new ComponentBuilder();
         $componentBuilder->addActionButton('Kullanıcı Banlansn mı', 'customId');
@@ -31,7 +31,7 @@ class Discord extends Notification implements DiscordNotificationContract
             'channelId' => $channelId,
             'embeds' => $embedBuilder->getEmbeds(),
             'components' => [
-                $componentBuilder->getActionRow()->getType(),
+                $componentBuilder->getActionRow(),
             ],
         ];
     }
