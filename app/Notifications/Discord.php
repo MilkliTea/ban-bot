@@ -3,10 +3,17 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Nwilging\LaravelDiscordBot\Contracts\Notifications\DiscordNotificationContract;
 use Nwilging\LaravelDiscordBot\Support\Builder\ComponentBuilder;
 use Nwilging\LaravelDiscordBot\Support\Builder\EmbedBuilder;
+use Nwilging\LaravelDiscordBot\Support\Component;
+use Nwilging\LaravelDiscordBot\Support\Components\ButtonComponent;
+use Nwilging\LaravelDiscordBot\Support\Embed;
+use Nwilging\LaravelDiscordBot\Support\Interactions\DiscordInteractionResponse;
+use Nwilging\LaravelDiscordBot\Channels\DiscordNotificationChannel;
+use Nwilging\LaravelDiscordBot\Contracts\Services\DiscordApiServiceContract;
 
 class Discord extends Notification implements DiscordNotificationContract
 {
@@ -24,8 +31,11 @@ class Discord extends Notification implements DiscordNotificationContract
         $embedBuilder->addAuthor('/alper');
 
         $componentBuilder = new ComponentBuilder();
-        $componentBuilder->addActionButton('Kullanıcı Banlansn mı', 'customId');
-
+        $componentBuilder->addLinkButton('Banla', 'https://kommunity.com/');
+        $component = new ButtonComponent('Banla', 'custom-id');
+        $component->withDangerStyle();
+        $componentBuilder->addActionButton('Banla', 'custom-id');
+        $this->kick();
         return [
             'contentType' => 'rich',
             'channelId' => $channelId,
@@ -34,5 +44,13 @@ class Discord extends Notification implements DiscordNotificationContract
                 $componentBuilder->getActionRow(),
             ],
         ];
+    }
+
+    //butona tıklandığı zaman çalışması gerekiyor
+    public function kick()
+    {
+        $response = new DiscordInteractionResponse(1);
+
+        return true;
     }
 }

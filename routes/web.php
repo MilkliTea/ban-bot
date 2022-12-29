@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('dc', [Dc::class, 'handleDiscordInteraction']);
 
 Route::get('/', function () {
     return view('welcome');

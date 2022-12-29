@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\Guild;
 use App\Notifications\Discord;
-use App\Notifications\NewDonation;
 use Illuminate\Console\Command;
 use Nwilging\LaravelDiscordBot\Contracts\Services\DiscordInteractionServiceContract;
 
